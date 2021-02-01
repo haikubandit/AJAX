@@ -90,4 +90,49 @@ async function getEpisodes(id) {
 	//       you can get this by making GET request to
 	//       http://api.tvmaze.com/shows/SHOW-ID-HERE/episodes
 	// TODO: return array-of-episode-info, as described in docstring above
+
+	const response = await axios.get(`http://api.tvmaze.com/shows/${id}/episodes`);
+	// console.log(shows);
+	// const episodes = response.data;
+	console.log(response);
+	const episodes = response.data.map(result => {
+		// let episode = result.show;
+		const { id, name, season, number, summary, image } = result;
+		return {
+			id,
+			name,
+			season,
+			number,
+			summary,
+			image: result.image ? result.image.original : 'https://tinyurl.com/tv-missing'
+		};
+	});
+	console.log('Episodes ', episodes);
+	return episodes;
+}
+
+function populateEpisodes(episodes) {
+	const $episodesList = $('#episodes-list');
+	$episodesList.empty();
+
+	for (const episode in episodes) {
+		console.log(episode);
+	}
+
+	// console.log(episodes);
+	// for (let episode of episodes) {
+	// let $item = $(
+	// 	`<div class="col-md-6 col-lg-3 Show" data-episode-id="${episode.id}">
+	//      <div class="card" data-episode-id="${episode.id}">
+	//      <img class="card-img-top" src="${episode.image}" alt="${episode.name}-image">
+	//        <div class="card-body">
+	//          <h5 class="card-title">${episode.name}</h5>
+	//          <p class="card-text">${episode.summary}</p>
+	//        </div>
+	//      </div>
+	//    </div>
+	//   `
+	// );
+	// $episodesList.append($item);
+	// }
 }

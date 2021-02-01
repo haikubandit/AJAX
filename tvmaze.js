@@ -53,6 +53,7 @@ function populateShows(shows) {
            <div class="card-body">
              <h5 class="card-title">${show.name}</h5>
              <p class="card-text">${show.summary}</p>
+             <button class="episode-btn btn btn-primary">Episodes</button>
            </div>
          </div>
        </div>
@@ -115,24 +116,43 @@ function populateEpisodes(episodes) {
 	const $episodesList = $('#episodes-list');
 	$episodesList.empty();
 
-	for (const episode in episodes) {
-		console.log(episode);
+	for (let episode of episodes) {
+		let $item = $(
+			`<div class="col-md-6 col-lg-3 Show" data-episode-id="${episode.id}">
+	     <div class="card" data-episode-id="${episode.id}">
+	     <img class="card-img-top" src="${episode.image}" alt="${episode.name}-image">
+	       <div class="card-body">
+	         <h5 class="card-title">${episode.name}</h5>
+	         <p class="card-text">${episode.summary}</p>
+	       </div>
+	     </div>
+	   </div>
+	  `
+		);
+		$episodesList.append($item);
 	}
-
-	// console.log(episodes);
-	// for (let episode of episodes) {
-	// let $item = $(
-	// 	`<div class="col-md-6 col-lg-3 Show" data-episode-id="${episode.id}">
-	//      <div class="card" data-episode-id="${episode.id}">
-	//      <img class="card-img-top" src="${episode.image}" alt="${episode.name}-image">
-	//        <div class="card-body">
-	//          <h5 class="card-title">${episode.name}</h5>
-	//          <p class="card-text">${episode.summary}</p>
-	//        </div>
-	//      </div>
-	//    </div>
-	//   `
-	// );
-	// $episodesList.append($item);
-	// }
+	$('#episodes-area').removeAttr('style');
 }
+
+/** Handle Episode button:
+ *    - hide episodes area
+ *    - get list of matching shows and show in shows list
+ */
+
+$(document).on('click', '.episode-btn', async function handleShowEpisodes(evt) {
+	evt.preventDefault();
+
+	// get closest ancestor with attribute of data-show-id
+	let $show = $(this).closest('[data-show-id]');
+	// get the show-id from element
+	let $showId = $show.data('show-id');
+
+	// display episode div
+	$('#episodes-area').show();
+
+	// get episodes based on show id
+	let episodes = await getEpisodes($showId);
+
+	// populate DOM with episode cards
+	populateEpisodes(episodes);
+});

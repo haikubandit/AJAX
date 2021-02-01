@@ -5,21 +5,37 @@
     <link rel="stylesheet"
       href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
   </head>
-  <body>
+  <body class="bg-dark">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">TV Data</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="form-inline my-2 my-lg-0 ml-auto" id="search-form">
+          <input class="form-control mr-sm-2" id="search-query" type="search"  value="bletchley" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
     <div class="container">
 
-    <h1>TV Maze</h1>
+    <!-- <h1>TV Maze</h1>
 
     <form class="form-inline" id="search-form">
       <input class="form-control" id="search-query" value="bletchley">
       <button class="btn btn-primary" type="submit">Go!</button>
-    </form>
+    </form> -->
 
     <div class="row mt-3" id="shows-list">
     </div>
 
     <section style="display: none" id="episodes-area">
-      <h2>Episodes</h2> 
+      <hr style="border-color: white;">
+      <h2 class="text-light">Episodes</h2> 
       <div class="row" id="episodes-list">
       </div>
       <!-- <ul id="episodes-list">
